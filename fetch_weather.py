@@ -18,15 +18,15 @@ print("Resolved location from API:")
 print(response["location"])
 print("Temperature (C):", response["current"]["temp_c"])
 
-# 1️⃣ Validate API response
+# 1️ Validate API response
 if "location" not in response or "current" not in response:
     print("API error response:", response)
     exit()
 
-# 2️⃣ Extract temperature safely
+# 2️ Extract temperature safely
 temp_c = response["current"]["temp_c"]
 
-# 3️⃣ Sanity check (VERY IMPORTANT)
+# 3️ Sanity check (VERY IMPORTANT)
 # Delhi realistic range check
 if temp_c < -5 or temp_c > 55:
     print(f"Invalid temperature detected: {temp_c} °C")
@@ -44,7 +44,7 @@ weather_record = {
 
 df = pd.DataFrame([weather_record])
 
-# 4️⃣ Prevent duplicate timestamps
+# 4️ Prevent duplicate timestamps
 file_exists = os.path.isfile("weather_raw.csv")
 
 if file_exists:
@@ -55,4 +55,4 @@ if file_exists:
 
 df.to_csv("weather_raw.csv", mode="a", header=not file_exists, index=False)
 
-print("STEP 1 ✔ Weather data ingested safely")
+print("STEP 1  Weather data ingested safely")
