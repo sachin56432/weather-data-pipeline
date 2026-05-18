@@ -3,16 +3,16 @@ import mysql.connector
 import os
 from dotenv import load_dotenv
 
-# 1️⃣ Load environment variables
+# 1️ Load environment variables
 load_dotenv()
 
-# 2️⃣ Read MySQL credentials from .env
+# 2️ Read MySQL credentials from .env
 DB_HOST = os.getenv("MYSQL_HOST")
 DB_USER = os.getenv("MYSQL_USER")
 DB_PASSWORD = os.getenv("MYSQL_PASSWORD")
 DB_NAME = os.getenv("MYSQL_DATABASE")
 
-# 3️⃣ Connect to MySQL
+# 3️ Connect to MySQL
 conn = mysql.connector.connect(
     host=DB_HOST,
     user=DB_USER,
@@ -24,24 +24,24 @@ cursor = conn.cursor()
 
 print("Connected to MySQL")
 
-# 4️⃣ Read cleaned CSV data
+# 4️ Read cleaned CSV data
 df = pd.read_csv("weather_cleaned.csv")
 
-# 5️⃣ SQL insert query
+# 5️ SQL insert query
 insert_query = """
 INSERT INTO weather_data
 (city, country, temperature_c, humidity, wind_kph, condition_text, timestamp)
 VALUES (%s, %s, %s, %s, %s, %s, %s)
 """
 
-# 6️⃣ Insert each row into MySQL
+# 6️ Insert each row into MySQL
 for _, row in df.iterrows():
     cursor.execute(insert_query, tuple(row))
 
-# 7️⃣ Commit changes
+# 7️ Commit changes
 conn.commit()
 
-# 8️⃣ Close connection
+# 8️ Close connection
 cursor.close()
 conn.close()
 
