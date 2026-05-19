@@ -10,7 +10,8 @@ conn = mysql.connector.connect(
     host=os.getenv("MYSQL_HOST"),
     user=os.getenv("MYSQL_USER"),
     password=os.getenv("MYSQL_PASSWORD"),
-    database=os.getenv("MYSQL_DATABASE")
+    database=os.getenv("MYSQL_DATABASE"),
+    port=int(os.getenv("MYSQL_PORT", 3306))
 )
 
 query = """
@@ -23,10 +24,12 @@ GROUP BY DATE(timestamp)
 df = pd.read_sql(query, conn)
 conn.close()
 
+import matplotlib
+matplotlib.use('Agg')  # No display needed
+
 plt.plot(df["date"], df["avg_temp"])
 plt.xticks(rotation=45)
 plt.title("Average Daily Temperature")
-plt.savefig("temperature_chart.png")
-print("Chart saved as temperature_chart.png")
+plt.savefig("temperature_chart.png")  # Save instead of show
 
-print("STEP 4  Analytics done")
+print("STEP 4 ✔ Analytics done")
