@@ -8,4 +8,4 @@ df["humidity"] = df["humidity"].astype(int)
 
 df.to_csv("weather_cleaned.csv", index=False)
 
-print("STEP 2 ✔ Data cleaned")
+print(" Data cleaned")
